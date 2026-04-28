@@ -14,7 +14,7 @@ export const Header = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
           <a href="/" className="flex items-center">
             {!logoError ? (
               <img 
-                src="/logo_senac.png" 
+                src="/logo_senac_labs.png" 
                 alt="Senac Labs" 
                 className="h-14 w-auto object-contain"
                 onError={() => setLogoError(true)}
