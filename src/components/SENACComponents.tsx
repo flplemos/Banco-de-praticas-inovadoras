@@ -137,7 +137,8 @@ const Checkbox = ({ id, label, checked = false, onChange }: { id: string, label:
         type="checkbox" 
         className="peer sr-only" 
         checked={checked} 
-        onChange={onChange} 
+        onChange={onChange}
+        readOnly={!onChange}
       />
       <div className="w-5 h-5 border-2 border-gray-200 rounded-md peer-checked:bg-senac-orange peer-checked:border-senac-orange transition-all"></div>
       <CheckIcon className="absolute top-1 left-1 transform scale-0 peer-checked:scale-100 transition-transform text-white" />

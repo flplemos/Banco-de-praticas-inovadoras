@@ -15,7 +15,8 @@ import { Header, Hero, Sidebar, PracticeCard } from './components/SENACComponent
 import { PRACTICES } from './types';
 
 export default function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navMenuOpen, setNavMenuOpen] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recentes');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
@@ -55,7 +56,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
-      <Header onOpenMenu={() => setMobileMenuOpen(true)} />
+      <Header onOpenMenu={() => setNavMenuOpen(true)} />
       
       <main className="flex-grow">
         <Hero 
@@ -63,7 +64,28 @@ export default function App() {
           setSearchQuery={setSearchQuery} 
         />
 
-        <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12">
+          {/* Mobile Filter Trigger - Re-positioned below Hero */}
+          <div className="lg:hidden mb-8">
+            <button 
+              onClick={() => setFilterDrawerOpen(true)}
+              className="w-full flex items-center justify-between p-4 bg-white border-2 border-senac-orange/20 rounded-2xl font-bold text-senac-blue shadow-lg shadow-senac-orange/5"
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-senac-orange p-2 rounded-lg text-white">
+                  <FilterIcon size={20} />
+                </div>
+                <div className="flex flex-col items-start translate-y-[-1px]">
+                  <span className="text-xs text-gray-400 uppercase tracking-widest font-black leading-none mb-1">Filtrar por</span>
+                  <span className="text-sm">Ano, ODS, Unidade...</span>
+                </div>
+              </div>
+              <div className="bg-senac-blue/5 px-3 py-1 rounded-full text-xs font-black text-senac-blue whitespace-nowrap">
+                {selectedYears.length + selectedODS.length + selectedCEPs.length} ativos
+              </div>
+            </button>
+          </div>
+
           <div className="flex flex-col lg:flex-row gap-10">
             
             {/* Desktop Sidebar */}
@@ -73,17 +95,6 @@ export default function App() {
                 selectedODS={selectedODS} onODSChange={handleODSChange}
                 selectedCEPs={selectedCEPs} onCEPChange={handleCEPChange}
               />
-            </div>
-
-            {/* Mobile Filter Trigger */}
-            <div className="lg:hidden mb-6">
-              <button 
-                onClick={() => setMobileMenuOpen(true)}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 rounded-xl font-bold text-senac-blue shadow-sm"
-              >
-                <FilterIcon size={18} />
-                Filtrar Resultados ({selectedYears.length + selectedODS.length + selectedCEPs.length})
-              </button>
             </div>
 
             {/* Main Content Area */}
@@ -227,15 +238,15 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer - NAVIGATION (Hamburger Menu) */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {navMenuOpen && (
           <>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => setNavMenuOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
             />
             <motion.div 
@@ -245,10 +256,67 @@ export default function App() {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white z-[101] shadow-2xl flex flex-col"
             >
-              <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                <h2 className="font-bold text-senac-blue">Filtros Avançados</h2>
+              <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-[#ffb84d]">
+                <div className="flex items-center gap-2">
+                  <div className="bg-senac-blue p-1 rounded">
+                    <X className="text-white rotate-45" size={16} />
+                  </div>
+                  <span className="font-black text-[#003366] uppercase tracking-tighter">Navegação</span>
+                </div>
                 <button 
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => setNavMenuOpen(false)}
+                  className="p-2 text-[#003366] hover:bg-white/20 rounded-full"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              <nav className="flex-grow p-8 space-y-6">
+                {['Início', 'Sobre', 'Edital', 'Práticas', 'E-books', 'Contato'].map((item) => (
+                  <a 
+                    key={item}
+                    href="#" 
+                    onClick={() => setNavMenuOpen(false)}
+                    className={`block font-black text-xl uppercase tracking-tighter transition-colors ${
+                      item === 'Práticas' ? 'text-senac-orange' : 'text-senac-blue hover:text-senac-orange'
+                    }`}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </nav>
+              <div className="p-8 border-t border-gray-100 italic text-gray-400 text-xs">
+                &copy; 2024 Senac Labs RN
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Drawer - FILTERS */}
+      <AnimatePresence>
+        {filterDrawerOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setFilterDrawerOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            />
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white z-[101] shadow-2xl flex flex-col"
+            >
+              <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-senac-blue">
+                  <FilterIcon className="text-senac-orange" size={20} />
+                  <span className="font-black text-xs uppercase tracking-widest">Filtros Avançados</span>
+                </div>
+                <button 
+                  onClick={() => setFilterDrawerOpen(false)}
                   className="p-2 text-gray-400 hover:text-gray-600"
                 >
                   <X size={20} />
@@ -262,12 +330,22 @@ export default function App() {
                   selectedCEPs={selectedCEPs} onCEPChange={handleCEPChange}
                 />
               </div>
-              <div className="p-4 border-t border-gray-100 bg-gray-50">
+              <div className="p-6 border-t border-gray-100 bg-gray-50 flex gap-3">
                 <button 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full bg-senac-blue text-white py-4 rounded-xl font-bold shadow-lg shadow-senac-blue/20"
+                  onClick={() => {
+                    setSelectedYears([]);
+                    setSelectedODS([]);
+                    setSelectedCEPs([]);
+                  }}
+                  className="flex-1 bg-white border border-gray-200 py-3 rounded-xl font-bold text-gray-500 text-sm"
                 >
-                  Aplicar Filtros
+                  Limpar
+                </button>
+                <button 
+                  onClick={() => setFilterDrawerOpen(false)}
+                  className="flex-2 bg-senac-blue text-white py-3 rounded-xl font-bold shadow-lg shadow-senac-blue/20"
+                >
+                  Aplicar
                 </button>
               </div>
             </motion.div>
