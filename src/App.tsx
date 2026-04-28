@@ -200,41 +200,18 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex flex-col items-center md:items-start gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-senac-blue rounded flex items-center justify-center text-white font-bold text-sm">SL</div>
-                <span className="font-bold text-lg tracking-tight text-senac-blue">Senac Labs</span>
-              </div>
-              <p className="text-sm text-gray-400 max-w-sm text-center md:text-left">
-                Transformando a educação através de metodologias ativas e práticas inovadoras.
-              </p>
-            </div>
-            <div className="flex gap-10">
-              <div className="space-y-4">
-                <h4 className="font-bold text-sm text-senac-blue uppercase tracking-widest">Plataforma</h4>
-                <ul className="space-y-2 text-sm text-gray-500">
-                  <li><a href="#" className="hover:text-senac-orange transition-colors">Sobre</a></li>
-                  <li><a href="#" className="hover:text-senac-orange transition-colors">Ajuda</a></li>
-                  <li><a href="#" className="hover:text-senac-orange transition-colors">Privacidade</a></li>
-                </ul>
-              </div>
-              <div className="space-y-4">
-                <h4 className="font-bold text-sm text-senac-blue uppercase tracking-widest">Contato</h4>
-                <ul className="space-y-2 text-sm text-gray-500">
-                  <li>Email: labs.rn@senac.br</li>
-                  <li>Tel: (84) 4005-1000</li>
-                </ul>
-              </div>
-            </div>
+      <footer className="bg-[#f2e9e5] py-12">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="flex flex-col items-center">
+            <img 
+              src="/logo_senac_labs.png" 
+              alt="Senac Labs" 
+              className="h-14 w-auto object-contain"
+            />
+            {/* <h2 className="text-4xl font-bold text-[#2c2c5e]">Senac Labs</h2>
+            <p className="text-sm text-[#2c2c5e]">ideias conectadas com a inovação</p> */}
           </div>
-          <div className="mt-12 pt-8 border-t border-gray-50 text-center">
-            <p className="text-xs text-gray-400 font-medium italic">
-              &copy; 2024 Senac Rio Grande do Norte. Todos os direitos reservados.
-            </p>
-          </div>
+          <p className="text-sm text-[#2c2c5e] mt-4">Copyright © 2026 Todos os direitos reservados.</p>
         </div>
       </footer>
 
