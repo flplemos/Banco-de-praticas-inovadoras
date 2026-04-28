@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Search, Filter, BookOpen, Download, ChevronRight, ChevronDown, MapPin, User, Tag, LayoutGrid, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ODS_DATA, PRACTICES, type Practice, type ODS } from '../types';
+import logo from '../assets/logo_senac_labs.png';
 
 // --- Header Component ---
 export const Header = ({ onOpenMenu }: { onOpenMenu: () => void }) => (
@@ -10,19 +11,9 @@ export const Header = ({ onOpenMenu }: { onOpenMenu: () => void }) => (
       <div className="flex items-center gap-3">
         <a href="/" className="flex items-center">
           <img 
-            src="/logo_senac_labs.png" 
+            src={logo} 
             alt="Senac Labs" 
             className="h-14 w-auto object-contain"
-            onError={(e) => {
-              // Fallback if image not found
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement!.innerHTML = `
-                <div class="flex flex-col -space-y-1">
-                  <span class="font-black text-2xl tracking-tighter text-[#004a8d]">SENAC</span>
-                  <span class="font-bold text-xs tracking-[0.2em] text-[#004a8d] uppercase">LABS RN</span>
-                </div>
-              `;
-            }}
           />
         </a>
       </div>
